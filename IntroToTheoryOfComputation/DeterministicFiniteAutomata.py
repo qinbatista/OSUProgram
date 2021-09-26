@@ -1,10 +1,13 @@
 class DFA:
     def __init__(self):
-        self._substring = ""
         self._counting_substring = 0
         self._is_contained = False
         self._is_odd = False
         self._substring_len = 0
+
+        self._substring = ""
+        self._substring_list = []
+        self._substring_longest = 0
 
     def __clear_cache(self):
         self._counting_substring = 0
@@ -12,12 +15,12 @@ class DFA:
         self._is_odd = False
         self._substring_len = 0
 
-    def DFA_singal_substring(self, substring):
+    def _DFA_singal_substring(self, giving_string):
         self.__clear_cache()
         self._substring_len = len(self._substring)
         compare_string_count = 0
-        for index, _ in enumerate(substring):
-            if self._substring[compare_string_count] == substring[index]:
+        for index, _ in enumerate(giving_string):
+            if self._substring[compare_string_count] == giving_string[index]:
                 compare_string_count += 1
             else:
                 compare_string_count = 0
@@ -27,7 +30,7 @@ class DFA:
                 compare_string_count=0
         self.__check_odd(self._counting_substring)#check if input string contained odd substring
         print("-------------------------------------------")
-        print(f"The [{substring}] in [{self._substring}]:")
+        print(f"The [{giving_string}] in [{self._substring}]:")
         print(f"[Contained]   " + str(myDFA._is_contained))
         print(f"[Odd]         " + str(myDFA._is_odd))
         print(f"[Quantity]    "+str(myDFA._counting_substring))
@@ -45,12 +48,25 @@ class DFA:
 
     def _append_substring_word(self, this_string):
         self._substring = this_string
+
+    def _list_substring_append(self, string):
+        self._substring_list.append(string)
+        if self._substring_longest <= len(string):
+            self._substring_longest = len(string)
+
+    def _is_contained_in_substring_list(self, giving_string):
+        pass
+
 if __name__ == '__main__':
     myDFA = DFA()
     myDFA._append_substring_word("aa")
-    myDFA.DFA_singal_substring("bbb")
-    myDFA.DFA_singal_substring("aba")
-    myDFA.DFA_singal_substring("baaaa")
-    myDFA.DFA_singal_substring("a")
-    myDFA.DFA_singal_substring("ababab")
-    myDFA.DFA_singal_substring("abaaba")
+    myDFA._DFA_singal_substring("bbb")
+    myDFA._DFA_singal_substring("aba")
+    myDFA._DFA_singal_substring("baaaa")
+    myDFA._DFA_singal_substring("a")
+    myDFA._DFA_singal_substring("ababab")
+    myDFA._DFA_singal_substring("abaaba")
+
+    myDFA._list_substring_append("fuck")
+    myDFA._list_substring_append("shit")
+    myDFA._list_substring_append("idiot")
