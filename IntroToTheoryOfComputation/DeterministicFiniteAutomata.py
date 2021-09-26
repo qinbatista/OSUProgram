@@ -12,7 +12,7 @@ class DFA:
         self._is_odd = False
         self._substring_len = 0
 
-    def checking_DFA(self, substring):
+    def DFA_singal_substring(self, substring):
         self.__clear_cache()
         self._substring_len = len(self._substring)
         compare_string_count = 0
@@ -26,6 +26,7 @@ class DFA:
                 self._counting_substring+=1
                 compare_string_count=0
         self.__check_odd(self._counting_substring)#check if input string contained odd substring
+        print("-------------------------------------------")
         print(f"The [{substring}] in [{self._substring}]:")
         print(f"[Contained]   " + str(myDFA._is_contained))
         print(f"[Odd]         " + str(myDFA._is_odd))
@@ -47,9 +48,9 @@ class DFA:
 if __name__ == '__main__':
     myDFA = DFA()
     myDFA._append_substring_word("aa")
-    myDFA.checking_DFA("bbb")
-    myDFA.checking_DFA("aba")
-    myDFA.checking_DFA("baaaa")
-    myDFA.checking_DFA("a")
-    myDFA.checking_DFA("ababab")
-    myDFA.checking_DFA("abaaba")
+    myDFA.DFA_singal_substring("bbb")
+    myDFA.DFA_singal_substring("aba")
+    myDFA.DFA_singal_substring("baaaa")
+    myDFA.DFA_singal_substring("a")
+    myDFA.DFA_singal_substring("ababab")
+    myDFA.DFA_singal_substring("abaaba")
