@@ -1,5 +1,7 @@
+// gcc --std=c99 -o out main.c  
+// ./out
 #include<stdio.h>
-
+#include <stdlib.h> 
 struct pokeman
 {
     char* name;
@@ -48,6 +50,24 @@ int main()
 
     printf("Pointer address: %p\n", t_ptr);
     printf("Pointer value: %d\n", *t_ptr);
+
+    *t_ptr = 10;
+    void* v_ptr = t_ptr;
+    void* v_ptr1 = &t; 
+    printf("%d\n", *((int* )(v_ptr)));
+    printf("%d\n", *((int* )(v_ptr1)));
+    void* v_ptr2 = &pika;
+    printf("%s\n", ((struct pokeman*)v_ptr2)->name);
+
+    struct pokeman* bulba = malloc(10 * sizeof(struct pokeman));
+    bulba[0].name = "follwer0";
+    bulba[1].name = "follwer1";
+    bulba->name = "follwer2";
+    printf("->%s\n",bulba->name);
+    printf("0=%s\n",bulba[0].name);
+    printf("1=%s\n",bulba[1].name);
+    printf("2=%s\n",bulba[2].name);
+    free(bulba);
     return 0;
 }
 
