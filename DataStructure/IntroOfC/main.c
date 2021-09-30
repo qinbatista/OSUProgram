@@ -7,8 +7,11 @@ struct pokeman
     char* name;
     int dex_num;
 };
-
 void printwhatipass(int x);
+void printwhatipass(int x)
+{
+    printf("passed %d\n", x);
+}
 int main()
 {
     int a = 5;
@@ -69,9 +72,4 @@ int main()
     printf("2=%s\n",bulba[2].name);
     free(bulba);
     return 0;
-}
-
-void printwhatipass(int x)
-{
-    printf("passed %d\n", x);
 }
