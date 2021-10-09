@@ -2,7 +2,7 @@
 // ./out
 #include<stdio.h>
 #include <stdlib.h> 
-struct pokeman
+struct pokemon
 {
     char* name;
     int dex_num;
@@ -44,7 +44,7 @@ int main()
     //     /* code */
     // }
     printwhatipass(20);
-    struct pokeman pika = {.name = "Sparky", .dex_num = 25};
+    struct pokemon pika = {.name = "Sparky", .dex_num = 25};
 
     pika.name = "Bolt";
     printf("Pokemon's name: %s\n", pika.name);
@@ -60,9 +60,9 @@ int main()
     printf("%d\n", *((int* )(v_ptr)));
     printf("%d\n", *((int* )(v_ptr1)));
     void* v_ptr2 = &pika;
-    printf("%s\n", ((struct pokeman*)v_ptr2)->name);
+    printf("%s\n", ((struct pokemon*)v_ptr2)->name);
 
-    struct pokeman* bulba = malloc(10 * sizeof(struct pokeman));
+    struct pokemon* bulba = malloc(10 * sizeof(struct pokemon));
     bulba[0].name = "follwer0";
     bulba[1].name = "follwer1";
     bulba->name = "follwer2";
