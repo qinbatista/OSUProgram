@@ -95,10 +95,10 @@ struct list* list_remove_index(struct list* _list, int _index)
     // printf("list->data = %s\n",_list->head->data);
     // printf("list->next->data = %s\n",_list->head->next->data );
     // printf("list->next->next->data = %s\n",_list->head->next->next->data );
-    printf("-----\n");
+    // printf("-----\n");
     while(1)
     {
-        printf("-----\n");
+        // printf("-----\n");
 
         if(index == _index)
         {
@@ -193,12 +193,9 @@ struct list* list_reverse(struct list* _list)
 
 void list_print(struct list* _list)
 {
-
-    printf("[list_print] %d\n",_list->size);
     if(_list==NULL)
     {
         printf("[list info] _list = NULL\n");
-        printf("[list info] size = %d\n",_list->size);
         return;
     }
     struct link *temp_link = _list->head;

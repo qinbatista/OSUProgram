@@ -5,7 +5,6 @@
 int main()
 {
     struct list* _list = list_create();
-    //string can't bigger than 128bit
     char *string0 = "a";
     _list = list_insert(_list,string0);
     char *string1 = "b";
@@ -17,6 +16,8 @@ int main()
     char *string4 = "e";
     _list = list_insert(_list,string4);
     list_print(_list);
+
+
 
     char *compare_sting = "a";
     _list = list_remove(_list, compare_sting);
@@ -33,7 +34,7 @@ int main()
 
     // _list = list_reverse(_list);
     // list_print(_list);
-    // list_free(_list);
-    // list_print(_list);
+
+    list_print(_list);
     return 0;
 }
