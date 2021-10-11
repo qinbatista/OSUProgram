@@ -15,6 +15,10 @@ int main()
     _list = list_insert(_list,string3);
     char *string4 = "e";
     _list = list_insert(_list,string4);
+    char *string5 = "f";
+    _list = list_insert(_list,string5);
+    char *string6 = "g";
+    _list = list_insert(_list,string6);
     list_print(_list);
 
 
@@ -34,7 +38,7 @@ int main()
 
     // _list = list_reverse(_list);
     // list_print(_list);
-
+    list_reverse(_list);
     list_print(_list);
     return 0;
 }

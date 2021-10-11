@@ -9,8 +9,8 @@ struct list* list_create()
     my_list->head = my_first_link;
     my_list->size = 0;
 
-    // my_first_link->data = NULL;
-    // my_first_link->next = NULL;
+    my_first_link->data = NULL;
+    my_first_link->next = NULL;
     return my_list;
 }
 void list_free(struct list* _list)
@@ -25,11 +25,13 @@ void list_free(struct list* _list)
 }
 struct list* list_insert(struct list* _list, void *data)
 {
-    struct link *temp_link;
-    temp_link = _list->head;
+    struct link *temp_link =  _list->head;
     while(temp_link->next!=NULL)
     {
+        printf("temp_link->next = %p\n",temp_link->next);
         temp_link = temp_link->next;//find last link
+        printf("temp_link->data = %s\n", temp_link->data);
+        printf("4\n");
     }
     temp_link->data = data;
     temp_link->next = malloc(sizeof(struct link));
@@ -112,7 +114,6 @@ struct list* list_remove_index(struct list* _list, int _index)
             }
             else
             {
-                printf("aaaa=%d\n",index);
                 printf("prev_link->next = %s\n",prev_link->data);
                 // printf("find\n");
                 prev_link->next = temp_link->next;
@@ -168,31 +169,30 @@ int list_position(struct list* _list, void *data)
 
 struct list* list_reverse(struct list* _list)
 {
-    struct list *new_link = list_create();
-    struct link *last_link = _list->head;
-    
-    // for(int i = 0; i<_list->size-1; i++)
-    // {
-    //     printf("last_link=%s\n",last_link->data);
-    //     last_link = last_link->next;
-    // }
-    // printf("_list->size=%d\n",_list->size);
-    // struct link *temp_link = _list->head;
-    // for(int i = _list->size; i>=0; i--)
-    // {
-    //     printf("i=%d\n",i);
-    //     temp_link = _list->head;
-    //     for(int j = i; j>0; j--)
-    //     {
-    //         temp_link = temp_link->next;
-    //     }
-    //     new_link = list_insert(temp_link)
-    // }
-    return _list;
+    struct list* new_link = list_create();
+    struct link *cur_link = _list->head;
+
+    for(int i = _list->size; i>=0; i--)
+    {
+        cur_link = _list->head;
+        for(int j = i-1; j>0; j--)
+        {
+            if(cur_link->next!=NULL)
+                cur_link = cur_link->next;
+        }
+        printf("[add data] = %s\n",cur_link->data);
+        char *a = cur_link->data;
+        new_link = list_insert(new_link,a);
+        printf("new_link->data=%s\n",new_link->head->data);
+        printf("new_link->head->next=%p\n",new_link->head->next);
+    }
+    free(_list);
+    return new_link;
 }
 
 void list_print(struct list* _list)
 {
+    printf("[List Info] size = %d:\n",_list->size);
     if(_list==NULL)
     {
         printf("[list info] _list = NULL\n");
@@ -206,6 +206,6 @@ void list_print(struct list* _list)
         temp_link = temp_link->next;
         index++;
     }
-    printf("[list info] size = %d\n",_list->size);
+    
 }
 
