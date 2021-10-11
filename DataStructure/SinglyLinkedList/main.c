@@ -21,6 +21,9 @@ int main()
     _list = list_insert(_list,string6);
     list_print(_list);
 
+    _list = list_reverse(_list);
+    list_print(_list);
+
 
 
     char *compare_sting = "a";
@@ -38,7 +41,7 @@ int main()
 
     // _list = list_reverse(_list);
     // list_print(_list);
-    list_reverse(_list);
+    _list = list_reverse(_list);
     list_print(_list);
     return 0;
 }

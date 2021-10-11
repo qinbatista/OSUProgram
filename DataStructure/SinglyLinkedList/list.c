@@ -28,14 +28,19 @@ struct list* list_insert(struct list* _list, void *data)
     struct link *temp_link =  _list->head;
     while(temp_link->next!=NULL)
     {
-        printf("temp_link->next = %p\n",temp_link->next);
+        // printf("2\n");
+        // printf("temp_link->data=%s\n",temp_link->data);
         temp_link = temp_link->next;//find last link
-        printf("temp_link->data = %s\n", temp_link->data);
-        printf("4\n");
+        // printf("temp_link->next->data=\n",temp_link->next->data);
     }
+    // printf("data=%s\n",data);
     temp_link->data = data;
     temp_link->next = malloc(sizeof(struct link));
+    temp_link->next->data = NULL;
+    temp_link->next->next = NULL;
     _list->size++;
+    // printf("temp_link->data=%s\n",temp_link->data);
+    // printf("temp_link->next->data=%s\n",temp_link->next->data);
     return _list;
 }
 struct list* list_remove(struct list* _list, void *data)
@@ -171,8 +176,7 @@ struct list* list_reverse(struct list* _list)
 {
     struct list* new_link = list_create();
     struct link *cur_link = _list->head;
-
-    for(int i = _list->size; i>=0; i--)
+    for(int i = _list->size; i>0; i--)
     {
         cur_link = _list->head;
         for(int j = i-1; j>0; j--)
@@ -180,13 +184,14 @@ struct list* list_reverse(struct list* _list)
             if(cur_link->next!=NULL)
                 cur_link = cur_link->next;
         }
-        printf("[add data] = %s\n",cur_link->data);
-        char *a = cur_link->data;
-        new_link = list_insert(new_link,a);
-        printf("new_link->data=%s\n",new_link->head->data);
-        printf("new_link->head->next=%p\n",new_link->head->next);
+        // printf("[reversing data] = %s\n",cur_link->data);
+        new_link = list_insert(new_link,cur_link->data);
+        free(cur_link);
     }
     free(_list);
+    // printf("new_link->head->data=%s\n",new_link->head->data);
+    // printf("new_link->head->next->data=%s\n",new_link->head->next->data);
+    // printf("new_link->head->next->next->data=%s\n",new_link->head->next->next->data);
     return new_link;
 }
 
@@ -198,13 +203,17 @@ void list_print(struct list* _list)
         printf("[list info] _list = NULL\n");
         return;
     }
+    // printf("2\n");
     struct link *temp_link = _list->head;
     int index = 0;
+    // printf("2.2\n");
     while(temp_link->next!=NULL)
     {
+        // printf("3\n");
         printf("[%d] %s\n",index,temp_link->data);
         temp_link = temp_link->next;
         index++;
+        // printf("4\n");
     }
     
 }
