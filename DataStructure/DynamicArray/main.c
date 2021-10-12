@@ -4,7 +4,7 @@
 #include "dynarray.h"
 int main()
 {
-    struct Myarray* my_array = dynarray_create();
+    struct dynarray* my_array = dynarray_create();
     dynarray_size(my_array);
     printf("array size = %d\n", dynarray_size(my_array));
     char *data_char = "this is data";

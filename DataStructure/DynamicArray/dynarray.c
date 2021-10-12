@@ -1,29 +1,29 @@
 #include"dynarray.h"
 #include<stdio.h>
 #include<stdlib.h>
-struct Myarray* dynarray_create()
+struct dynarray* dynarray_create()
 {
-    struct Myarray* this_array = malloc(sizeof(struct Myarray));
+    struct dynarray* this_array = malloc(sizeof(struct dynarray));
     this_array->size = 1;
     this_array->capacity_index = 0;
     return this_array;
 }
-struct Myarray* expand_dynarray(int size)
+struct dynarray* expand_dynarray(int size)
 {
-    struct Myarray* this_array = malloc(size * sizeof(struct Myarray));
+    struct dynarray* this_array = malloc(size * sizeof(struct dynarray));
     this_array->size = size;
     this_array->capacity_index = 0;
     return this_array;
 }
-void dynarray_free(struct Myarray* array)
+void dynarray_free(struct dynarray* array)
 {
     free(array);
 }
-int dynarray_size(struct Myarray* array)
+int dynarray_size(struct dynarray* array)
 {
     return array->size;
 }
-void dynarray_insert(struct Myarray** array, void* data)
+void dynarray_insert(struct dynarray** array, void* data)
 {
     if((*array)->size > (*array)->capacity_index)
     {
@@ -36,7 +36,7 @@ void dynarray_insert(struct Myarray** array, void* data)
     }
     else
     {
-        struct Myarray* expanded_array;
+        struct dynarray* expanded_array;
         printf("not enough capacity, create a new array\n");
         expanded_array = expand_dynarray((*array)->size*2);
         for(int i = 0; i < (*array)->capacity_index+1; i++)
@@ -68,7 +68,7 @@ void dynarray_insert(struct Myarray** array, void* data)
     //     printf("[%d]expanded_array=%d\n",i, *(int *)(expanded_array[i].data));
     // }
 }
-void dynarray_remove(struct Myarray* array, int remove_index)
+void dynarray_remove(struct dynarray* array, int remove_index)
 {
     if(array->capacity_index>=remove_index)
     {
@@ -88,7 +88,7 @@ void dynarray_remove(struct Myarray* array, int remove_index)
     }
     // return array;
 }
-void* dynarray_get(struct Myarray* array, int index)
+void* dynarray_get(struct dynarray* array, int index)
 {
     void *data = NULL;
     if(index<array->capacity_index)
@@ -97,7 +97,7 @@ void* dynarray_get(struct Myarray* array, int index)
         printf("[dynarray_get]index is bigger than capacity\n");
     return data;
 }
-void dynarray_set(struct Myarray* array, int index, void *value)
+void dynarray_set(struct dynarray* array, int index, void *value)
 {
     if(index<array->capacity_index)
         array[index].data = value;
@@ -105,14 +105,14 @@ void dynarray_set(struct Myarray* array, int index, void *value)
         printf("[dynarray_set]index is bigger than capacity\n");
     // return array;
 }
-void dynarray_print(struct Myarray* this_array)
+void dynarray_print(struct dynarray* this_array)
 {
     printf("[Array Info] size = %d, used = %d\n",this_array->size,this_array->capacity_index);
     // printf("used = %d\n",this_array->capacity_index);
 }
 void test_input()
 {
-    struct Myarray* this_array = malloc(sizeof(struct Myarray));
+    struct dynarray* this_array = malloc(sizeof(struct dynarray));
     // printf("aaaa\n");
 }
 
