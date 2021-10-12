@@ -4,7 +4,7 @@
 #include "dynarray.h"
 int main()
 {
-    struct dynarray* my_array = dynarray_create();
+    struct Myarray* my_array = dynarray_create();
     dynarray_size(my_array);
     printf("array size = %d\n", dynarray_size(my_array));
     char *data_char = "this is data";
@@ -18,10 +18,10 @@ int main()
             *number = i;
             void *data_int_temp = number;
             printf("data_int_temp = %d\n",*((int *)(data_int_temp)));
-            dynarray_insert(my_array, data_int_temp);
+            my_array = dynarray_insert(my_array, data_int_temp);
         }
         else
-            dynarray_insert(my_array, data_char);
+            my_array = dynarray_insert(my_array, data_char);
     }
     dynarray_print(my_array);
     //delete int, string
