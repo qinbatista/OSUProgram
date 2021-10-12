@@ -18,12 +18,12 @@ void list_free(struct list* _list)
     int size = _list->size;
     for(int i = 0; i< size; i++)
     {
-        _list = list_remove_index(_list,0);
+        list_remove_index(_list,0);
     }
     free(_list);
     printf("[list_free] %p\n",_list);
 }
-struct list* list_insert(struct list* _list, void *data)
+void list_insert(struct list* _list, void *data)
 {
     struct link *temp_link =  _list->head;
     while(temp_link->next!=NULL)
@@ -41,9 +41,8 @@ struct list* list_insert(struct list* _list, void *data)
     _list->size++;
     // printf("temp_link->data=%s\n",temp_link->data);
     // printf("temp_link->next->data=%s\n",temp_link->next->data);
-    return _list;
 }
-struct list* list_remove(struct list* _list, void *data)
+void list_remove(struct list* _list, void *data)
 {
     int index = 0;
     struct link *temp_link = _list->head;
@@ -85,9 +84,9 @@ struct list* list_remove(struct list* _list, void *data)
         // printf("new temp_link = %s\n",temp_link->data);
         index++;
     }
-    return _list;
+    // return _list;
 }
-struct list* list_remove_index(struct list* _list, int _index)
+void list_remove_index(struct list* _list, int _index)
 {
     int index = 0;
     struct link *temp_link = _list->head;
@@ -96,7 +95,7 @@ struct list* list_remove_index(struct list* _list, int _index)
     if(_index>=_list->size)
     {
         printf("[list_remove_index] index over the size\n");
-        return _list;
+        // return _list;
     }
     // printf("_index = %d\n",_index);
     // printf("list->data = %s\n",_list->head->data);
@@ -144,7 +143,7 @@ struct list* list_remove_index(struct list* _list, int _index)
         // printf("-----\n");
 
     }
-    return _list;
+    // return _list;
 }
 int list_position(struct list* _list, void *data)
 {
@@ -172,7 +171,7 @@ int list_position(struct list* _list, void *data)
     return index;
 }
 
-struct list* list_reverse(struct list* _list)
+void list_reverse(struct list* _list)
 {
     struct list* new_link = list_create();
     struct link *cur_link = _list->head;
@@ -185,14 +184,17 @@ struct list* list_reverse(struct list* _list)
                 cur_link = cur_link->next;
         }
         // printf("[reversing data] = %s\n",cur_link->data);
-        new_link = list_insert(new_link,cur_link->data);
+        list_insert(new_link,cur_link->data);
         free(cur_link);
     }
-    free(_list);
+    
+    _list->head = new_link->head;
+    _list->size = new_link->size;
+    free(new_link);
     // printf("new_link->head->data=%s\n",new_link->head->data);
     // printf("new_link->head->next->data=%s\n",new_link->head->next->data);
     // printf("new_link->head->next->next->data=%s\n",new_link->head->next->next->data);
-    return new_link;
+    // return new_link;
 }
 
 void list_print(struct list* _list)

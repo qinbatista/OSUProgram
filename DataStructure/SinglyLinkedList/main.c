@@ -6,34 +6,34 @@ int main()
 {
     struct list* _list = list_create();
     char *string0 = "a";
-    _list = list_insert(_list,string0);
+    list_insert(_list,string0);
     char *string1 = "b";
-    _list = list_insert(_list,string1);
+    list_insert(_list,string1);
     char *string2 = "c";
-    _list = list_insert(_list,string2);
+    list_insert(_list,string2);
     char *string3 = "d";
-    _list = list_insert(_list,string3);
+    list_insert(_list,string3);
     char *string4 = "e";
-    _list = list_insert(_list,string4);
+    list_insert(_list,string4);
     char *string5 = "f";
-    _list = list_insert(_list,string5);
+    list_insert(_list,string5);
     char *string6 = "g";
-    _list = list_insert(_list,string6);
+    list_insert(_list,string6);
     list_print(_list);
 
-    _list = list_reverse(_list);
+    list_reverse(_list);
     list_print(_list);
 
 
 
     char *compare_sting = "a";
-    _list = list_remove(_list, compare_sting);
+    list_remove(_list, compare_sting);
     char *compare_sting1 = "c";
-    _list = list_remove(_list, compare_sting1);
-    _list = list_remove_index(_list, 0);
+    list_remove(_list, compare_sting1);
+    list_remove_index(_list, 0);
     char *compare_sting3 = "aa";
-    _list = list_remove(_list, compare_sting3);
-    _list = list_remove_index(_list, 2);
+    list_remove(_list, compare_sting3);
+    list_remove_index(_list, 2);
     list_print(_list);
 
     // char *list_p_char = "b";
@@ -41,7 +41,7 @@ int main()
 
     // _list = list_reverse(_list);
     // list_print(_list);
-    _list = list_reverse(_list);
+    list_reverse(_list);
     list_print(_list);
     return 0;
 }
