@@ -9,6 +9,7 @@ int main()
     printf("array size = %d\n", dynarray_size(my_array));
     char *data_char = "this is data";
     int array_size = 8;
+    printf("[1my_array] my_array=%p\n",my_array);
     //insert int, string, int, string, int, string...
     for(int i = 0; i< array_size; i++)
     {
@@ -18,11 +19,14 @@ int main()
             *number = i;
             void *data_int_temp = number;
             printf("data_int_temp = %d\n",*((int *)(data_int_temp)));
-            my_array = dynarray_insert(my_array, data_int_temp);
+            dynarray_insert(&my_array, data_int_temp);
         }
         else
-            my_array = dynarray_insert(my_array, data_char);
+            dynarray_insert(&my_array, data_char);
+
+        printf("[my_array] my_array=%p\n",my_array);
     }
+    printf("------dynarray_insert=%p\n",my_array);
     dynarray_print(my_array);
     //delete int, string
     for(int i = 0; i< array_size; i++)

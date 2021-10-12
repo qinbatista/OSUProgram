@@ -23,39 +23,43 @@ int dynarray_size(struct Myarray* array)
 {
     return array->size;
 }
-struct Myarray* dynarray_insert(struct Myarray* array, void* data)
+void dynarray_insert(struct Myarray** array, void* data)
 {
-    struct Myarray* expanded_array;
-    if(array->size > array->capacity_index)
+    if((*array)->size > (*array)->capacity_index)
     {
         // printf("capacity is enough, add data to last\n");
-        array[array->capacity_index].data = data;
-        array->capacity_index = array->capacity_index+1;
-        expanded_array = array;
+        (*array)[(*array)->capacity_index].data = data;
+        (*array)->capacity_index = (*array)->capacity_index+1;
+        // expanded_array = array;
         // printf("no array->size = %d\n", array->size);
         // printf("no array->capacity_index = %d\n", array->capacity_index);
     }
     else
     {
-        // printf("not enough capacity, create a new array\n");
-        expanded_array = expand_dynarray(array->size*2);
-        for(int i = 0; i < array->capacity_index+1; i++)
+        struct Myarray* expanded_array;
+        printf("not enough capacity, create a new array\n");
+        expanded_array = expand_dynarray((*array)->size*2);
+        for(int i = 0; i < (*array)->capacity_index+1; i++)
         {
-            if(i == array->capacity_index)
+            if(i == (*array)->capacity_index)
             {
                 // printf("[%d]add new:%d\n",i,*((int *)(data)));
                 expanded_array[i].data = data;
-                expanded_array->capacity_index = array->capacity_index+1;
+                expanded_array->capacity_index = (*array)->capacity_index+1;
             }
             else
             {
                 // printf("[%d]copying old:%d\n",i,*((int *)(array[i].data)));
-                expanded_array[i].data = array[i].data;
+                expanded_array[i].data = (*array)[i].data;
             }
         }
-        
-        
-        free(array);
+        *array = expanded_array;
+        // free(array);
+        printf("B:expanded_array=%p\n",expanded_array);
+        printf("B:array=         %p\n",array);
+        // free(array);
+        printf("A:expanded_array=%p\n",expanded_array);
+        printf("A:array=         %p\n",array);
     }
     // printf("expanded_array->size = %d\n", expanded_array->size);
     // printf("expanded_array->capacity_index = %d\n", expanded_array->capacity_index);
@@ -63,9 +67,6 @@ struct Myarray* dynarray_insert(struct Myarray* array, void* data)
     // {
     //     printf("[%d]expanded_array=%d\n",i, *(int *)(expanded_array[i].data));
     // }
-    // printf("-----\n");
-   
-    return expanded_array;
 }
 void dynarray_remove(struct Myarray* array, int remove_index)
 {
