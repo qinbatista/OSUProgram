@@ -2,11 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <string.h>
-struct list
-{
-    struct link* head;
-    int size;
-};
+
 struct list* list_create()
 {
     struct list* my_list = malloc(sizeof(struct list));
@@ -27,7 +23,6 @@ void list_free(struct list* _list)
         list_remove_index(_list,0);
     }
     free(_list);
-    printf("[list_free] %p\n",_list);
 }
 void list_insert(struct list* _list, void *data)
 {
@@ -48,9 +43,9 @@ void list_insert(struct list* _list, void *data)
     temp_link->next->next = NULL;
     temp_link->previous = previous_link;
     _list->size++;
-    printf("temp_link->data=%s\n",temp_link->data);
-    printf("temp_link->previous->data=%s\n",temp_link->previous->data);
-    printf("-----\n");
+    // printf("temp_link->data=%s\n",temp_link->data);
+    // printf("temp_link->previous->data=%s\n",temp_link->previous->data);
+    // printf("-----\n");
 }
 int remove_function(void* a, void* b)
 {   
@@ -137,6 +132,7 @@ void list_remove_index(struct list* _list, int _index)
             {
                 struct link* headlink =  _list->head->next;
                 free(_list->head);
+                free(_list->head->previous);
                 _list->head = headlink;
                 _list->size--;
                 // printf("[list_remove_index]delete first link\n");

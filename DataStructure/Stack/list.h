@@ -8,6 +8,11 @@ struct link
     struct link *next;
     struct link *previous;
 };
+struct list
+{
+    struct link* head;
+    int size;
+};
 struct list;
 
 struct list* list_create();

@@ -10,7 +10,7 @@
  */
 
 #include <stdlib.h>
-
+#include <stdio.h>
 #include "stack.h"
 #include "list.h"
 
@@ -24,7 +24,7 @@
 struct stack
 {
   struct list* list;
-  void* head;
+  struct link* head;
   int size;
 };
 
@@ -86,7 +86,17 @@ void stack_push(struct stack* stack, void* val)
 {
   list_insert(stack->list,val);
   stack->size++;
-  stack->head = val;
+  if(stack->head==NULL)
+  {
+    stack->head = stack->list->head;
+  }
+  else
+  {
+    stack->head = stack->head->next;
+  }
+  printf("[stack_push]stack->head=%d\n",*((int *)stack->head->data));
+  printf("[stack_push]stack->head=%s\n",stack->head->data);
+  printf("---\n");
 }
 
 /*
@@ -99,7 +109,7 @@ void stack_push(struct stack* stack, void* val)
  */
 void* stack_top(struct stack* stack)
 {
-  return stack->head;
+  return stack->head->data;
 }
 
 /*
@@ -114,26 +124,47 @@ void* stack_top(struct stack* stack)
  */
 void* stack_pop(struct stack* stack)
 {
-  // stack->list->data[stack->size-1] = NULL;
-  // stack->head = stack->list->data[stack->size-2];
-  // stack->size--;
-  // printf("[queue_dequeue]size=%d\n",queue->size);
+  struct link* prev_link = stack->head->previous;
+  free(stack->head);
+  stack->head = prev_link;
+  stack->size--;
+  stack->list->size--;
+  // printf("[stack_pop]stack->head=%d\n",stack->head);
   // printf("[queue_dequeue]queue->head=%d\n",*(int *)(queue->head));
   // printf("[queue_dequeue]queue->head=%s\n",queue->head);
   return stack;
 }
 void stack_print(struct stack* stack)
 {
-  for(int i = 0; i< stack->size;i++)
+  // for(int i = 0; i< stack->size;i++)
+  // {
+  //   if(i%2 == 0)
+  //   {
+  //     printf("[%d]data = %d\n",i,*((int *)(stack->list->data[i])));
+  //   }
+  //   else
+  //   {
+  //     printf("[%d]data = %s\n",i,stack->list->data[i]);
+  //   }
+  // }
+  struct list* _list = stack->list;
+  printf("[List Info] size = %d:\n",_list->size);
+  if(_list->size==0)
   {
-    if(i%2 == 0)
-    {
-      // printf("[%d]data = %d\n",i,*((int *)(stack->list->data[i])));
-    }
-    else
-    {
-      // printf("[%d]data = %s\n",i,stack->list->data[i]);
-    }
+      printf("[list info] _list = NULL\n");
+      return;
   }
+  struct link *temp_link = _list->head;
+  int index = 0;
+  while(temp_link->next!=NULL)
+  {
+    if(index%2 == 0)
+      printf("[%d] %d\n",index,*((int *)temp_link->data));
+    else
+      printf("[%d] %s\n",index,temp_link->data);
+      temp_link = temp_link->next;
+      index++;
+  }
+    
   printf("------\n");
 }
