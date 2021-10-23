@@ -2,3 +2,6 @@ DataStructure/IntroOfC/pointers.dSYM
 DataStructure/IntroOfC/pointers
 DataStructure/IntroOfC/fun_with_strings.dSYM
 DataStructure/IntroOfC/fun_with_strings
+DataStructure/queue/dynarray.o
+DataStructure/queue/queue.o
+DataStructure/queue/test_queue
