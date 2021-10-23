@@ -28,7 +28,6 @@ int main()
             // printf("[insert]%s\n",data_char);
             dynarray_insert(my_array, data_char);
         }
-
         // printf("[my_array] my_array=%p\n",my_array);
     }
     // printf("------dynarray_insert=%p\n",my_array);
