@@ -26,6 +26,7 @@ struct queue
   struct dynarray* array;
   void* head;
   int size;
+  int queue_count;
 };
 
 /*
@@ -52,7 +53,6 @@ struct queue* queue_create()
  */
 void queue_free(struct queue* queue)
 {
-  dynarray_free(queue->array);
   free(queue);
 }
 
@@ -87,7 +87,7 @@ void queue_enqueue(struct queue* queue, void* val)
   dynarray_insert(queue->array,val);
   queue->size++;
   queue->head = val;
-  // printf("[queue_enqueue]size=%d\n",queue->size);
+  printf("[queue_enqueue]size=%d\n",queue->size);
   // printf("[queue_enqueue]queue->head=%d\n",*(int *)(queue->head));
   // printf("[queue_enqueue]queue->head=%s\n",queue->head);
 }
@@ -119,10 +119,11 @@ void* queue_dequeue(struct queue* queue)
 {
   // printf("[queue_dequeue]queue->array->data[queue->size]=%d\n",*(int *)(queue->array->data[queue->size-1]));
   // printf("[queue_dequeue]queue->array->data[queue->size]=%s\n",queue->array->data[queue->size-1]);
-  queue->array->data[queue->size-1] = NULL;
-  queue->head = queue->array->data[queue->size-2];
+  queue->array->data[queue->queue_count] = NULL;
+  queue->head = queue->array->data[queue->queue_count+1];
   queue->size--;
-  // printf("[queue_dequeue]size=%d\n",queue->size);
+  queue->queue_count++;
+  printf("[queue_dequeue]size=%d\n",queue->size);
   // printf("[queue_dequeue]queue->head=%d\n",*(int *)(queue->head));
   // printf("[queue_dequeue]queue->head=%s\n",queue->head);
   return queue;
@@ -130,15 +131,22 @@ void* queue_dequeue(struct queue* queue)
 
 void queue_print(struct queue* queue)
 {
-  for(int i = 0; i< queue->size;i++)
+  if(queue->size == 0)
   {
-    if(i%2 == 0)
+    printf("empty queue\n");
+  }
+  else
+  {
+    for(int i = queue->queue_count; i< queue->queue_count+queue->size;i++)
     {
-      printf("[%d]data = %d\n",i,*((int *)(queue->array->data[i])));
-    }
-    else
-    {
-      printf("[%d]data = %s\n",i,queue->array->data[i]);
+      if(i%2 == 0)
+      {
+        printf("[%d]data = %d\n",i,*((int *)(queue->array->data[i])));
+      }
+      else
+      {
+        printf("[%d]data = %s\n",i,queue->array->data[i]);
+      }
     }
   }
   printf("------\n");

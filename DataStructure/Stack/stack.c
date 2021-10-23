@@ -52,7 +52,7 @@ struct stack* stack_create()
  */
 void stack_free(struct stack* stack)
 {
-    list_free(stack->list);
+    // list_free(stack->list);
     free(stack);
 }
 
