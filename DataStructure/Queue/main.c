@@ -38,7 +38,7 @@ int main()
     printf("queue's frond = %d\n",*((int *)queue_front(this_queue)));
 
     queue_dequeue(this_queue);
-    printf("queue's frond = %s\n",queue_front(this_queue));
+    // printf("queue's frond = %s\n",queue_front(this_queue));
 
     queue_print(this_queue);
 
