@@ -52,7 +52,7 @@ struct queue* queue_create()
  */
 void queue_free(struct queue* queue)
 {
-  free(queue->array);
+  dynarray_free(queue->array);
   free(queue);
 }
 

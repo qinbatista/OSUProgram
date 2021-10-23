@@ -12,6 +12,7 @@ struct dynarray* dynarray_create()
 
 void dynarray_free(struct dynarray* da)
 {
+    free(da->data);
     free(da);
 }
 int dynarray_size(struct dynarray* da)
