@@ -6,13 +6,17 @@ int main()
 {
     struct list* _list = list_create();
     char *string0 = "a";
+    printf("1\n");
     list_insert(_list,string0);
+    printf("1\n");
     char *string1 = "b";
     list_insert(_list,string1);
+    printf("1\n");
     char *string2 = "c";
     list_insert(_list,string2);
     char *string3 = "d";
     list_insert(_list,string3);
+    printf("1\n");
     char *string4 = "e";
     list_insert(_list,string4);
     char *string5 = "f";
@@ -20,7 +24,7 @@ int main()
     char *string6 = "g";
     list_insert(_list,string6);
     list_print(_list);
-
+    printf("1\n");
     list_reverse(_list);
     list_print(_list);
 

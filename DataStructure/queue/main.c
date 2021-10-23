@@ -1,14 +1,14 @@
 //gcc --std=c99 -o out main.c dynarray.c Stack.c  
 #include<stdlib.h>
 #include<stdio.h>
-#include"stack.h"
+#include"Queue.h"
 int main()
 {
-    struct queue* this_stack = stack_create();
+    struct queue* this_queue = queue_create();
     char *data_char = "this is data";
     int array_size = 4;
     // if(queue_isempty(this_queue))
-    printf("stack_isempty(this_stack)=%d\n",stack_isempty(this_stack));
+    printf("queue_isempty(this_queue)=%d\n",queue_isempty(this_queue));
     // else
         // printf("is not empty\n");
     for(int i = 0; i< array_size; i++)
@@ -19,30 +19,30 @@ int main()
             *number = i;
             void *data_int_temp = number;
             printf("[insert]%d\n",*((int *)(data_int_temp)));
-            queue_enqueue(this_stack, data_int_temp);
+            queue_enqueue(this_queue, data_int_temp);
         }
         else
         {
             printf("[insert]%s\n",data_char);
-            queue_enqueue(this_stack, data_char);
+            queue_enqueue(this_queue, data_char);
         }
         // printf("[my_array] my_array=%p\n",my_array);
     }
-    queue_dequeue(this_stack);
-    printf("queue's frond = %d\n",*((int *)queue_front(this_stack)));
+    queue_dequeue(this_queue);
+    printf("queue's frond = %d\n",*((int *)queue_front(this_queue)));
 
-    queue_dequeue(this_stack);
-    printf("queue's frond = %s\n",queue_front(this_stack));
+    queue_dequeue(this_queue);
+    printf("queue's frond = %s\n",queue_front(this_queue));
 
-    queue_dequeue(this_stack);
-    printf("queue's frond = %d\n",*((int *)queue_front(this_stack)));
+    queue_dequeue(this_queue);
+    printf("queue's frond = %d\n",*((int *)queue_front(this_queue)));
 
-    queue_dequeue(this_stack);
+    queue_dequeue(this_queue);
     // printf("queue's frond = %s\n",queue_front(this_queue));
 
-    queue_print(this_stack);
+    queue_print(this_queue);
 
-    printf("queue_isempty(this_queue)=%d\n",queue_isempty(this_stack));
-    queue_free(this_stack);
+    printf("queue_isempty(this_queue)=%d\n",queue_isempty(this_queue));
+    queue_free(this_queue);
     return 0;
 }

@@ -11,7 +11,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "queue.h"
+#include "Queue.h"
 #include "dynarray.h"
 
 /*
