@@ -5,114 +5,122 @@ struct dynarray* dynarray_create()
 {
     struct dynarray* this_array = malloc(sizeof(struct dynarray));
     this_array->size = 1;
-    this_array->capacity_index = 0;
+    this_array->capacity = 0;
+    this_array->data = (void **)malloc(this_array->size * sizeof(void*));
     return this_array;
 }
-struct dynarray* expand_dynarray(int size)
+
+void dynarray_free(struct dynarray* da)
 {
-    struct dynarray* this_array = malloc(size * sizeof(struct dynarray));
-    this_array->size = size;
-    this_array->capacity_index = 0;
-    return this_array;
+    free(da);
 }
-void dynarray_free(struct dynarray* array)
+int dynarray_size(struct dynarray* da)
 {
-    free(array);
+    return da->size;
 }
-int dynarray_size(struct dynarray* array)
+struct dynarray* expand_dynarray(struct dynarray* array,int size)
 {
-    return array->size;
-}
-void dynarray_insert(struct dynarray** array, void* data)
-{
-    if((*array)->size > (*array)->capacity_index)
+    // struct dynarray* this_array = malloc(size * sizeof(struct dynarray));
+    void **temp = (void **)malloc(size*2 * sizeof(void*));
+    for (int i = 0; i<array->capacity; i++)
     {
-        // printf("capacity is enough, add data to last\n");
-        (*array)[(*array)->capacity_index].data = data;
-        (*array)->capacity_index = (*array)->capacity_index+1;
-        // expanded_array = array;
-        // printf("no array->size = %d\n", array->size);
-        // printf("no array->capacity_index = %d\n", array->capacity_index);
+        // if(i%2 == 0)
+        //     printf("temp[%d]=%d\n",i,*((int*)(array->data[i])));
+        // else
+        //     printf("temp[%d]=%s\n",i,array->data[i]);
+        temp[i] = array->data[i];
+    }
+    // for (int i = 0; i<size; i++)
+    // {
+    //     array->data[i] = temp[i];
+    // }
+    // free(*(array->data));
+    array->size = size*2;
+    array->data = temp;
+    // for (int i = 0; i<size; i++)
+    // {
+    //     array->data
+    // }
+    // printf("enough:size = %d, capacity = %d\n",array->size, array->capacity);
+    // for(int i = 0; i< array->capacity; i++)
+    // {
+    return array;
+}
+void dynarray_insert(struct dynarray* da, void* data)
+{
+    if(da->size > da->capacity)
+    {
+        // printf("enough:size = %d, capacity = %d\n",da->size, da->capacity);
+        // printf("enough:data int = %s\n", data);
+        // printf("1enough data = %d\n", *((int *)data));
+        // printf("1enough:da->data[0] = %d\n", (int)da->data[0]);
+        da->data[da->capacity] = data;
+        da->capacity = da->capacity+1;
+        // printf("2enough:da->data[0] = %d\n", *((int*)da->data[0]));
+        // printf("2enough:da->data[1] = %d\n", (int)da->data[1]);
     }
     else
     {
-        struct dynarray* expanded_array;
-        printf("not enough capacity, create a new array\n");
-        expanded_array = expand_dynarray((*array)->size*2);
-        for(int i = 0; i < (*array)->capacity_index+1; i++)
-        {
-            if(i == (*array)->capacity_index)
-            {
-                // printf("[%d]add new:%d\n",i,*((int *)(data)));
-                expanded_array[i].data = data;
-                expanded_array->capacity_index = (*array)->capacity_index+1;
-            }
-            else
-            {
-                // printf("[%d]copying old:%d\n",i,*((int *)(array[i].data)));
-                expanded_array[i].data = (*array)[i].data;
-            }
-        }
-        *array = expanded_array;
-        // free(array);
-        printf("B:expanded_array=%p\n",expanded_array);
-        printf("B:array=         %p\n",array);
-        // free(array);
-        printf("A:expanded_array=%p\n",expanded_array);
-        printf("A:array=         %p\n",array);
+        // printf("expanding:size = %d, capacity = %d\n",da->size, da->capacity);
+        int current_capacity = da->capacity;
+        da = expand_dynarray(da, da->size);
+        da->data[current_capacity] = data;
+        da->capacity = da->capacity+1;
     }
-    // printf("expanded_array->size = %d\n", expanded_array->size);
-    // printf("expanded_array->capacity_index = %d\n", expanded_array->capacity_index);
-    // for(int i = 0; i< expanded_array->capacity_index; i++)
+    // for(int i = 0; i< da->capacity; i++)
     // {
-    //     printf("[%d]expanded_array=%d\n",i, *(int *)(expanded_array[i].data));
+    //     if(i%2 == 0)
+    //         printf("[%d]data=%d\n",i,*((int *)(da->data[i])));
+    //     else
+    //         printf("[%d]data=%s\n",i, da->data[i]);
     // }
+    // printf("----\n");
 }
-void dynarray_remove(struct dynarray* array, int remove_index)
+void dynarray_remove(struct dynarray* da, int remove_index)
 {
-    if(array->capacity_index>=remove_index)
+    if(da->capacity>=remove_index)
     {
-        for(int i = 0; i <= array->capacity_index; i++)
+        for(int i = 0; i <= da->capacity; i++)
         {
             if(i >= remove_index)
             {
-                array[i].data = array[i+1].data;
+                da->data[i] = da->data[i+1];
             }
         }
-        array[array->capacity_index].data = NULL;
-        array->capacity_index--;
+        da->data[da->capacity] = NULL;
+        da->capacity--;
     }
     else
     {
-        printf("[dynarray_remove]remove_index is bigger than capacity");
+        printf("[dynarray_remove]remove_index is bigger than capacity\n");
     }
     // return array;
 }
-void* dynarray_get(struct dynarray* array, int index)
+void* dynarray_get(struct dynarray* da, int index)
 {
     void *data = NULL;
-    if(index<array->capacity_index)
-        data = array[index].data;
+    if(index<da->capacity)
+        data = da->data[index];
     else
         printf("[dynarray_get]index is bigger than capacity\n");
     return data;
 }
-void dynarray_set(struct dynarray* array, int index, void *value)
+void dynarray_set(struct dynarray* da, int index, void *value)
 {
-    if(index<array->capacity_index)
-        array[index].data = value;
+    if(index<da->capacity)
+        da->data[index] = value;
     else
         printf("[dynarray_set]index is bigger than capacity\n");
     // return array;
 }
-void dynarray_print(struct dynarray* this_array)
+void dynarray_print(struct dynarray* da)
 {
-    printf("[Array Info] size = %d, used = %d\n",this_array->size,this_array->capacity_index);
-    // printf("used = %d\n",this_array->capacity_index);
+    printf("[Array Info] size = %d, used = %d\n",da->size,da->capacity);
+    // printf("used = %d\n",this_array->capacity);
 }
 void test_input()
 {
-    struct dynarray* this_array = malloc(sizeof(struct dynarray));
+    struct dynarray* da = malloc(sizeof(struct dynarray));
     // printf("aaaa\n");
 }
 
