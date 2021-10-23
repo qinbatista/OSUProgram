@@ -1,7 +1,7 @@
 //gcc --std=c99 -o out main.c dynarray.c Stack.c  
 #include<stdlib.h>
 #include<stdio.h>
-#include"Queue.h"
+#include"queue.h"
 int main()
 {
     struct queue* this_queue = queue_create();
