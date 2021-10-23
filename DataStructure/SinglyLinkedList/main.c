@@ -27,17 +27,19 @@ int main()
 
 
     char *compare_sting = "a";
-    list_remove(_list, compare_sting);
+    int (* func)(void *a, void *b);
+    func = &remove_function;
+    list_remove(_list, compare_sting, func);
     char *compare_sting1 = "c";
-    list_remove(_list, compare_sting1);
+    list_remove(_list, compare_sting1,func);
     list_remove_index(_list, 0);
     char *compare_sting3 = "aa";
-    list_remove(_list, compare_sting3);
+    list_remove(_list, compare_sting3,func);
     list_remove_index(_list, 2);
     list_print(_list);
 
-    // char *list_p_char = "b";
-    // printf("[position]=%d\n",list_position(_list,list_p_char));
+    char *list_p_char = "b";
+    printf("[position]=%d\n",list_position(_list,list_p_char,func));
 
     // _list = list_reverse(_list);
     // list_print(_list);

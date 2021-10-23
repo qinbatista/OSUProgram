@@ -2,6 +2,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <string.h>
+struct list
+{
+    struct link* head;
+    int size;
+};
 struct list* list_create()
 {
     struct list* my_list = malloc(sizeof(struct list));
@@ -42,7 +47,22 @@ void list_insert(struct list* _list, void *data)
     // printf("temp_link->data=%s\n",temp_link->data);
     // printf("temp_link->next->data=%s\n",temp_link->next->data);
 }
-void list_remove(struct list* _list, void *data)
+int remove_function(void* a, void* b)
+{   
+    // printf("1%s\n",a);
+    // printf("2%s\n",b);
+    if(!strncmp(a, b,128))
+    {
+        return 0;
+        printf("found!\n");
+    }
+    else
+    {
+        return -1;
+        printf("can't find!\n");
+    }
+}
+void list_remove(struct list* _list, void *data,int (*cmp)(void* a, void* b))
 {
     int index = 0;
     struct link *temp_link = _list->head;
@@ -52,11 +72,11 @@ void list_remove(struct list* _list, void *data)
     {
         if(index >= _list->size)
         {
-            printf("[list_remove]can't find *data\n");
+            // printf("[list_remove]can't find *data\n");
             break;
         }
         // printf("temp_link = %s\n",temp_link->data);
-        if(!strncmp(temp_link->data, data,128))
+        if(!cmp(temp_link->data, data))
         {
             if(index == 0)
             {
@@ -145,22 +165,24 @@ void list_remove_index(struct list* _list, int _index)
     }
     // return _list;
 }
-int list_position(struct list* _list, void *data)
+int list_position(struct list* list, void* val, int (*cmp)(void* a, void* b))
 {
     int index = 0;
-    struct link *temp_link = _list->head;
-    struct link *prev_link = _list->head;
+    struct link *temp_link = list->head;
+    struct link *prev_link = list->head;
     // printf("data = %s\n",data);
     while(1)
     {
-        if(index >= _list->size)
+        if(index >= list->size)
         {
             printf("[list_remove]can't find *data\n");
             return -1;
         }
         // printf("temp_link = %s\n",temp_link->data);
-        if(!strncmp(temp_link->data, data,128))
+        // if(!strncmp(temp_link->data, val,128))
+        if(!cmp(temp_link->data,val))
         {
+            // printf()
             return index;
         }
         prev_link = temp_link;

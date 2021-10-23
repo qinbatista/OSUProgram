@@ -48,5 +48,6 @@ int main()
     funk = &printInt;
     funk(&a);
     inception(&a,funk);
+    
     return 0;
 }
