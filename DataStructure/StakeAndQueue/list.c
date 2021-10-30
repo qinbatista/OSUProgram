@@ -6,30 +6,21 @@
 
 #include <stdlib.h>
 #include <assert.h>
-
 #include "list.h"
 
 /*
  * This structure is used to represent a single link in a singly-linked list.
  * It is not defined in ll.h, so it is not visible to the user.
  */
-struct link {
-  void* val;
-  struct link* next;
-};
-
 /*
  * This structure is used to represent an entire singly-linked list.  Note that
  * we're keeping track of just the head of the list here, for simplicity.
  */
-struct list {
-  struct link* head;
-};
 
 /*
  * This function allocates and initializes a new, empty linked list and
  * returns a pointer to it.
- */
+//  */
 struct list* list_create() {
   struct list* list = malloc(sizeof(struct list));
   list->head = NULL;
@@ -206,6 +197,10 @@ void* topVal(struct list* list)
   {
     return list->head->val;
   }
+  else
+  {
+    return NULL;
+  }
 }
 
 int isEmpty(struct list* list)
@@ -220,7 +215,7 @@ int isEmpty(struct list* list)
   }
 }
 
-void remove(struct list* list)
+void remove_list(struct list* list)
 {
   struct link* tempLink;
 

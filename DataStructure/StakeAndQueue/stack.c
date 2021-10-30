@@ -9,8 +9,8 @@
  * Email:
  */
 
-#include <stdlib.h>
-
+#include<stdlib.h>
+#include<stdio.h>
 #include "stack.h"
 #include "list.h"
 
@@ -32,7 +32,10 @@ struct stack
  */
 struct stack* stack_create()
 {
-
+  struct stack* my_stack = malloc(sizeof(struct stack));
+  my_stack->list = list_create();
+  // my_stack->list->head = NULL;
+  return my_stack;
 }
 
 /*
@@ -46,7 +49,7 @@ struct stack* stack_create()
  */
 void stack_free(struct stack* stack)
 {
-
+  free(stack);
 }
 
 /*
@@ -59,7 +62,7 @@ void stack_free(struct stack* stack)
  */
 int stack_isempty(struct stack* stack)
 {
-
+  return isEmpty(stack->list);
 }
 
 /*
@@ -74,7 +77,12 @@ int stack_isempty(struct stack* stack)
  */
 void stack_push(struct stack* stack, void* val)
 {
-
+  list_insert(stack->list,val);
+  // struct list* this_list = stack->list;
+  // this_list->head;
+  // my_link->
+  // printf("[stack_push]stack->head=%d\n",*((int *)stack->list->head->val));
+  // printf("[stack_push]stack->head=%s\n",stack->list->head->val);
 }
 
 /*
@@ -87,7 +95,7 @@ void stack_push(struct stack* stack, void* val)
  */
 void* stack_top(struct stack* stack)
 {
-
+  return stack->list->head->val;
 }
 
 /*
@@ -102,5 +110,13 @@ void* stack_top(struct stack* stack)
  */
 void* stack_pop(struct stack* stack)
 {
-
+  if(stack->list->head->next!=NULL)
+  {
+    remove_list(stack->list);
+    return stack->list->head->val;
+  }
+  else
+  {
+    return NULL;
+  }
 }

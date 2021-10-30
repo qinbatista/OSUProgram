@@ -6,18 +6,13 @@
 
 #include <stdlib.h>
 #include <assert.h>
-
+#include <stdio.h>
 #include "dynarray.h"
 
 /*
  * This structure is used to represent a single dynamic array.
  */
-struct dynarray {
-  void** data;
-  int size;
-  int capacity;
-  int start;
-};
+
 
 #define DYNARRAY_INIT_CAPACITY 4
 
@@ -114,6 +109,8 @@ void dynarray_insert(struct dynarray* da, void* val)
    * Make sure we have enough space for the new element.  Resize if needed.
    */
   if (da->size == da->capacity) {
+    printf("aa= %d\n",da->size);
+    printf("bb= %d\n",da->capacity);
     _dynarray_resize(da, 2 * da->capacity);
   }
 

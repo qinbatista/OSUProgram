@@ -10,7 +10,15 @@
 /*
  * Structure used to represent a singly-linked list.
  */
-struct list;
+
+struct list {
+  struct link* head;
+};
+
+struct link {
+  void* val;
+  struct link* next;
+};
 
 /*
  * Linked list interface function prototypes.  Refer to list.c for
@@ -24,6 +32,6 @@ int list_position(struct list* list, void* val, int (*cmp)(void* a, void* b));
 void list_reverse(struct list* list);
 void* topVal(struct list* list);
 int isEmpty(struct list* list);
-void remove(struct list* list);
+void remove_list(struct list* list);
 
 #endif

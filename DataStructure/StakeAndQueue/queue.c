@@ -32,7 +32,9 @@ struct queue
  */
 struct queue* queue_create()
 {
-
+  struct queue* this_queue = malloc(sizeof(struct queue)); 
+  this_queue->array = dynarray_create();
+  return this_queue;
 }
 
 /*
@@ -46,7 +48,7 @@ struct queue* queue_create()
  */
 void queue_free(struct queue* queue)
 {
-
+  free(queue);
 }
 
 /*
@@ -59,7 +61,7 @@ void queue_free(struct queue* queue)
  */
 int queue_isempty(struct queue* queue)
 {
-
+  return queue->array->size;
 }
 
 /*
@@ -74,7 +76,7 @@ int queue_isempty(struct queue* queue)
  */
 void queue_enqueue(struct queue* queue, void* val)
 {
-
+  addVal(queue->array,val);
 }
 
 /*
@@ -87,7 +89,7 @@ void queue_enqueue(struct queue* queue, void* val)
  */
 void* queue_front(struct queue* queue)
 {
-
+  return topVal(queue->array);
 }
 
 /*
@@ -102,5 +104,7 @@ void* queue_front(struct queue* queue)
  */
 void* queue_dequeue(struct queue* queue)
 {
-
+  void *temp = queue->array->data[0];
+  dynarray_remove(queue->array,0);
+  return temp;
 }

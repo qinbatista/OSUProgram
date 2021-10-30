@@ -11,6 +11,12 @@
  * Structure used to represent a dynamic array.
  */
 struct dynarray;
+struct dynarray {
+  void** data;
+  int size;
+  int capacity;
+  int start;
+};
 
 /*
  * Dynamic array interface function prototypes.  Refer to dynarray.c for
