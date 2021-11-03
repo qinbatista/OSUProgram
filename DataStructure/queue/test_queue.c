@@ -66,7 +66,8 @@ int main(int argc, char** argv) {
    * correct values.
    */
   printf("\n== Dequeueing remaining values: front / dequeued (expected)\n");
-  while (simfront < simback && !queue_isempty(q)) {
+  
+  while (simfront < simback) {
     int* expected = simqueue[simfront++];
     int* front = queue_front(q);
     int* dequeued = queue_dequeue(q);
