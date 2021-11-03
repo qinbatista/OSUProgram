@@ -84,19 +84,25 @@ int stack_isempty(struct stack* stack)
  */
 void stack_push(struct stack* stack, void* val)
 {
+  // printf("[stack_push]1\n");
+  // printf("[stack_push]2:%d\n",*((int *)val));
   list_insert(stack->list,val);
+  
   stack->size++;
   if(stack->head==NULL)
   {
+    // printf("[stack_push]2\n");
     stack->head = stack->list->head;
+    // stack->list->head->
   }
   else
   {
+    // printf("[stack_push]3\n");
     stack->head = stack->head->next;
+    // printf("[stack_push]4\n");
   }
-  printf("[stack_push]stack->head=%d\n",*((int *)stack->head->data));
-  printf("[stack_push]stack->head=%s\n",stack->head->data);
-  printf("---\n");
+  // printf("[stack_push]stack->head=%d\n",*((int *)stack->head->data));
+  // printf("---\n");
 }
 
 /*
@@ -124,15 +130,24 @@ void* stack_top(struct stack* stack)
  */
 void* stack_pop(struct stack* stack)
 {
-  struct link* prev_link = stack->head->previous;
-  free(stack->head);
-  stack->head = prev_link;
-  stack->size--;
-  stack->list->size--;
+  void* data = stack->head->data;
+  if(stack->size>0)
+  {
+    printf("[popped]=%d\n",*((int *)(data)));
+    struct link* prev_link = stack->head->previous;
+    list_remove_index(stack->list,stack->list->size-1);
+    stack->head = prev_link;
+    stack->size--;
+  }
+  else
+  {
+    // stack->head = NULL;
+    printf("[stack_pop]empty stack\n");
+  }
   // printf("[stack_pop]stack->head=%d\n",stack->head);
   // printf("[queue_dequeue]queue->head=%d\n",*(int *)(queue->head));
   // printf("[queue_dequeue]queue->head=%s\n",queue->head);
-  return stack;
+  return data;
 }
 void stack_print(struct stack* stack)
 {
@@ -158,10 +173,7 @@ void stack_print(struct stack* stack)
   int index = 0;
   while(temp_link->next!=NULL)
   {
-    if(index%2 == 0)
       printf("[%d] %d\n",index,*((int *)temp_link->data));
-    else
-      printf("[%d] %s\n",index,temp_link->data);
       temp_link = temp_link->next;
       index++;
   }

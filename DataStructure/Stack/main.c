@@ -13,32 +13,39 @@ int main()
         // printf("is not empty\n");
     for(int i = 0; i< array_size; i++)
     {
-        if(i%2 == 0)
-        {
-            int *number = malloc(sizeof(int));
-            *number = i;
-            void *data_int_temp = number;
-            printf("[insert]%d\n",*((int *)(data_int_temp)));
-            stack_push(this_stack, data_int_temp);
-        }
-        else
-        {
-            printf("[insert]%s\n",data_char);
-            stack_push(this_stack, data_char);
-        }
+        int *number = malloc(sizeof(int));
+        *number = i;
+        void *data_int_temp = number;
+        printf("[insert]%d\n",*((int *)(data_int_temp)));
+        stack_push(this_stack, data_int_temp);
         // printf("[my_array] my_array=%p\n",my_array);
     }
     stack_print(this_stack);
     stack_pop(this_stack);
     printf("stack's top = %d\n",*((int *)stack_top(this_stack)));
     stack_pop(this_stack);
-    printf("stack's top = %s\n",stack_top(this_stack));
+    printf("stack's top = %d\n",*((int *)stack_top(this_stack)));
     stack_pop(this_stack);
     printf("stack's top = %d\n",*((int *)stack_top(this_stack)));
     stack_pop(this_stack);
-    printf("stack's top = %s\n",stack_top(this_stack));
+    stack_pop(this_stack);
+    stack_pop(this_stack);
+    // printf("stack's top = %d\n",*((int *)stack_top(this_stack)));
     stack_print(this_stack);
     printf("stack_isempty(this_queue)=%d\n",stack_isempty(this_stack));
+
+
+    for(int i = 0; i< array_size; i++)
+    {
+        int *number = malloc(sizeof(int));
+        *number = i;
+        void *data_int_temp = number;
+        printf("[insert]main%d\n",*((int *)(data_int_temp)));
+        stack_push(this_stack, data_int_temp);
+        // printf("[my_array] my_array=%p\n",my_array);
+    }
+
+
     stack_free(this_stack);
     return 0;
 }

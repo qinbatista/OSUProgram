@@ -28,23 +28,29 @@ void list_insert(struct list* _list, void *data)
 {
     struct link *temp_link =  _list->head;
     struct link *previous_link =  malloc(sizeof(struct link));
+    // previous_link = _list->head;
+    // printf("[list_insert]1:%d\n",*((int *)data));
+    // if(temp_link->next==NULL)
+        // printf("[list_insert]2:%d\n",*((int *)temp_link->next));
     while(temp_link->next!=NULL)
     {
-        // printf("2\n");
-        // printf("temp_link->data=%s\n",temp_link->data);
+        // printf("[list_insert]11\n");
+        // printf("[list_insert]while\n");
+        // printf("[list_insert]temp_link->next=%d\n",*((int *)temp_link->next));
         previous_link = temp_link;
         temp_link = temp_link->next;//find last link
         // printf("temp_link->next->data=\n",temp_link->next->data);
     }
-    // printf("data=%s\n",data);
+    // printf("[list_insert]1:%d\n",*((int *)data));
     temp_link->data = data;
     temp_link->next = malloc(sizeof(struct link));
     temp_link->next->data = NULL;
     temp_link->next->next = NULL;
+    // printf("[list_insert]2:%d\n",*((int *)data));
     temp_link->previous = previous_link;
     _list->size++;
-    // printf("temp_link->data=%s\n",temp_link->data);
-    // printf("temp_link->previous->data=%s\n",temp_link->previous->data);
+    // printf("[list_insert]3:%d\n",*((int *)data));
+    // printf("temp_link->previous->data=%d\n",*((int *)(temp_link->previous->data)));
     // printf("-----\n");
 }
 int remove_function(void* a, void* b)
@@ -139,7 +145,7 @@ void list_remove_index(struct list* _list, int _index)
             }
             else
             {
-                printf("prev_link->next = %s\n",prev_link->data);
+                // printf("prev_link->next = %s\n",prev_link->data);
                 // printf("find\n");
                 prev_link->next = temp_link->next;
                 // printf("prev_link->data = %s\n",prev_link->data);

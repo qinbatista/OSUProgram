@@ -87,8 +87,8 @@ void queue_enqueue(struct queue* queue, void* val)
   dynarray_insert(queue->array,val);
   queue->size++;
   queue->head = val;
-  printf("[queue_enqueue]size=%d\n",queue->size);
-  // printf("[queue_enqueue]queue->head=%d\n",*(int *)(queue->head));
+  // printf("[queue_enqueue]size=%d\n",queue->size);
+  printf("[queue_enqueue]queue->head=%d\n",*(int *)(queue->head));
   // printf("[queue_enqueue]queue->head=%s\n",queue->head);
 }
 
@@ -119,14 +119,26 @@ void* queue_dequeue(struct queue* queue)
 {
   // printf("[queue_dequeue]queue->array->data[queue->size]=%d\n",*(int *)(queue->array->data[queue->size-1]));
   // printf("[queue_dequeue]queue->array->data[queue->size]=%s\n",queue->array->data[queue->size-1]);
-  queue->array->data[queue->queue_count] = NULL;
-  queue->head = queue->array->data[queue->queue_count+1];
-  queue->size--;
-  queue->queue_count++;
+  // printf("[queue_dequeue]queue->queue_count=%d\n",queue->queue_count);
+  void* temp = queue->array->data[queue->size-1];
+  queue->array->data[queue->size-1] = NULL;
+  if(queue->size-2>=0)
+  {
+    queue->head = queue->array->data[queue->size-2];
+    queue->size--;
+  }
+  else
+  {
+    printf("[queue_dequeue]no more data in queue\n");
+    queue->head = NULL;
+    queue->size--;
+  }
+
+  // queue->queue_count++;
   printf("[queue_dequeue]size=%d\n",queue->size);
-  // printf("[queue_dequeue]queue->head=%d\n",*(int *)(queue->head));
-  // printf("[queue_dequeue]queue->head=%s\n",queue->head);
-  return queue;
+  if(queue->head!=NULL)
+    printf("[queue_dequeue]queue->head=%d\n",*(int *)(queue->head));
+  return temp;
 }
 
 void queue_print(struct queue* queue)

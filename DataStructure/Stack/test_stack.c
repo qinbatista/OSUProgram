@@ -65,7 +65,9 @@ int main(int argc, char** argv) {
    * correct values.
    */
   printf("\n== Popping rest from stack: top / popped (expected)\n");
-  while (simtop > 0 && !stack_isempty(s)) {
+  printf("simtop=%d\n",simtop);
+  printf("simtop=%d\n",stack_isempty(s));
+  while (simtop > 0) {
     int* expected = simstack[--simtop];
     int* top = stack_top(s);
     int* popped = stack_pop(s);
