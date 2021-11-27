@@ -4,8 +4,8 @@
  * you need in this file to implement a priority queue.  Make sure to add your
  * name and @oregonstate.edu email address below:
  *
- * Name: 
- * Email:
+ * Name: yupeng qin
+ * Email:qinyu@oregonstate.edu
  */
 
 #include <stdlib.h>
@@ -22,7 +22,8 @@
 
 struct pq
 {
-
+    struct dynarray* dataList;
+    struct dynarray * priorityList;
 };
 
 /*
@@ -32,7 +33,10 @@ struct pq
 
 struct pq* pq_create()
 {
-
+    struct pq* _pq = malloc(sizeof(struct pq));
+    _pq->dataList = dynarray_create();
+    _pq->priorityList = dynarray_create();
+    return _pq;
 }
 
 /*
@@ -46,9 +50,11 @@ struct pq* pq_create()
 
 void pq_free(struct pq* pq)
 {
-
+    assert(pq);
+    free(pq->dataList);
+    free(pq->priorityList);
+    free(pq);
 }
-
 
 /*
  * This function should return 1 if the specified priority queue is empty and
@@ -64,7 +70,11 @@ void pq_free(struct pq* pq)
 
 int pq_isempty(struct pq* pq)
 {
-
+    assert(pq);
+    if(pq->dataList->size==0)
+        return 1;
+    else
+        return 0;
 }
 
 
@@ -88,7 +98,61 @@ int pq_isempty(struct pq* pq)
 
 void pq_insert(struct pq* pq, void* value, int priority)
 {
-	
+    assert(pq);
+    void *p = malloc(sizeof(void));
+    p = &priority;
+    // new_priority = priority;
+    // printf("pq->priorityList =%d\n",*(int *)p);
+    dynarray_insert(pq->dataList,value);
+    dynarray_insert(pq->priorityList,value);
+    int count = pq->priorityList->size-1;
+    // printf("inserted value:%d, capacity =%d\n", *(int *)value,pq->dataList->size);
+    printf("max count:%d, inserted value = %d\n",count,*(int *)value);
+    // printf("pq->priorityList =%d\n",*(int *)pq->priorityList->data[0]);
+    // int up_count = 0;
+    // up_count = count;
+    while(count>0)
+    {
+        // printf("count-1 =%d\n",count-1);
+        // printf("(count-1)/2 =%d\n",(count-1)/2);
+        // printf("%d\n",*(int *)(pq->priorityList->data[(count-1)/2]));
+        // printf("%d\n",*(int*)pq->priorityList->data[count-1]);
+        printf("up [%d] =%d,down [%d] =%d\n",(count-1)/2,*(int *)(pq->dataList->data[(count-1)/2]),count,*(int*)pq->dataList->data[count]);
+        if(*(int *)pq->priorityList->data[(count-1)/2]>*(int *)pq->priorityList->data[count])
+        {
+            void *temp = pq->dataList->data[count];
+            pq->dataList->data[count] = pq->dataList->data[(count-1)/2];
+            pq->dataList->data[(count-1)/2] = temp;
+
+            void *temp1 = pq->priorityList->data[count];
+            pq->priorityList->data[count] = pq->priorityList->data[(count-1)/2];
+            pq->priorityList->data[(count-1)/2] = temp1;
+            printf("swap: %d with %d \n",*(int *)pq->priorityList->data[count],*(int *)pq->priorityList->data[(count-1)/2]);
+        }
+        count = (count-1)/2;
+        // if((count-1)/2==0 && count==1)
+        // {
+        //     if(*(int *)pq->priorityList->data[0]>*(int *)pq->priorityList->data[1])
+        //     {
+        //         void *temp = pq->dataList->data[0];
+        //         pq->dataList->data[1] = pq->dataList->data[0];
+        //         pq->dataList->data[0] = temp;
+
+        //         void *temp1 = pq->priorityList->data[0];
+        //         pq->priorityList->data[1] = pq->priorityList->data[0];
+        //         pq->priorityList->data[0] = temp1;
+        //         printf("swap: %d with %d \n",*(int *)pq->priorityList->data[1],*(int *)pq->priorityList->data[0]);
+        //     }
+        // }
+    }
+    
+    for (int i = 0; i < pq->priorityList->size; i++)
+    {
+        printf("%d,", *(int *)pq->priorityList->data[i]);
+    }
+    printf("\n");
+    printf("---------\n");
+    
 }
 
 
@@ -107,7 +171,8 @@ void pq_insert(struct pq* pq, void* value, int priority)
 
 void* pq_first(struct pq* pq)
 {
-
+    assert(pq);
+    return pq->dataList->data[pq->priorityList->size];
 }
 
 /*
@@ -125,7 +190,8 @@ void* pq_first(struct pq* pq)
 
 int pq_first_priority(struct pq* pq)
 {
-
+    assert(pq);
+    return *(int *)pq->dataList->data[0];
 }
 
 
@@ -145,5 +211,72 @@ int pq_first_priority(struct pq* pq)
 
 void* pq_remove_first(struct pq* pq)
 {
- 
+    assert(pq);
+    pq->priorityList->data[0] = pq->priorityList->data[pq->priorityList->size-1];
+    pq->dataList->data[0] = pq->dataList->data[pq->dataList->size-1];
+    dynarray_remove(pq->priorityList,pq->priorityList->size-1);
+    dynarray_remove(pq->dataList,pq->dataList->size-1);
+    int count = 0;
+    for (int i = 0; i < pq->priorityList->size; i++)
+    {
+        printf("%d,", *(int *)pq->priorityList->data[i]);
+    }
+    printf("\n");
+    while(count < pq->priorityList->size)
+    {
+        // printf("%d <%d\n",count,pq->priorityList->size);
+        // printf("%d <%d\n",2*count+2,pq->priorityList->size);
+        // printf("count-1 =%d\n",count-1);
+        // printf("(count-1)/2 =%d\n",(count-1)/2);
+        // printf("%d\n",*(int *)(pq->priorityList->data[(count-1)/2]));
+        // printf("%d\n",*(int*)pq->priorityList->data[count-1]);
+        // printf("top[%d] =%d,",count,*(int *)(pq->dataList->data[count]));
+        // printf("top right [%d] =%d,",2*count+1,*(int *)(pq->dataList->data[2*count+1]));
+        // printf("top left [%d] =%d\n",2*count+2,*(int *)(pq->dataList->data[2*count+2]));
+        // printf("a\n");
+        if(2*count+1>pq->priorityList->size || 2*count+2>pq->priorityList->size)
+            break;
+        // if(2*count+2>pq->priorityList->size)
+        //     break;
+        // if(*(int *)pq->dataList->data[count]>*(int *)pq->priorityList->data[2*count+1] || *(int *)pq->dataList->data[count]> *(int *)pq->priorityList->data[2*count+2])
+        // {
+        if(*(int *)pq->priorityList->data[2*count+1] < *(int *)pq->priorityList->data[2*count+2])
+        {
+            if(*(int *)pq->dataList->data[count]<*(int *)pq->priorityList->data[2*count+1])
+                break;
+            void *temp = pq->dataList->data[count];
+            pq->dataList->data[count] = pq->dataList->data[2*count+1];
+            pq->dataList->data[2*count+1] = temp;
+
+            void *temp1 = pq->priorityList->data[count];
+            pq->priorityList->data[count] = pq->priorityList->data[2*count+1];
+            pq->priorityList->data[2*count+1] = temp1;
+            printf("count = %d, swap count = %d,  swap left: %d with %d \n", count,2*count+1,*(int *)pq->priorityList->data[count],*(int *)pq->priorityList->data[2*count+1]);
+            count = 2*count+1;
+        }
+        else
+        {
+            if(*(int *)pq->dataList->data[count]<*(int *)pq->priorityList->data[2*count+2])
+                break;
+            void *temp = pq->dataList->data[count];
+            pq->dataList->data[count] = pq->dataList->data[2*count+2];
+            pq->dataList->data[2*count+2] = temp;
+
+            void *temp1 = pq->priorityList->data[count];
+            pq->priorityList->data[count] = pq->priorityList->data[2*count+2];
+            pq->priorityList->data[2*count+2] = temp1;
+            printf("count = %d, swap count = %d,  swap right: %d with %d \n", count,2*count+2,*(int *)pq->priorityList->data[count],*(int *)pq->priorityList->data[2*count+2]);
+            count = 2*count+2;
+        }
+        // }
+        // printf("aaaa\n");
+    }
+    for (int i = 0; i < pq->priorityList->size; i++)
+    {
+        printf("%d,", *(int *)pq->priorityList->data[i]);
+    }
+    printf("\n");
+    printf("---------max count = %d\n",pq->priorityList->size-1);
+    return pq->priorityList->data[0];
 }
+

@@ -14,12 +14,7 @@
 /*
  * This structure is used to represent a single dynamic array.
  */
-struct dynarray
-{
-  void** data;
-  int size;
-  int capacity;
-};
+
 
 #define DYNARRAY_INIT_CAPACITY 8
 

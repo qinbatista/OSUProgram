@@ -1,7 +1,7 @@
 /*
  * This is a small program to test your priority queue implementation.
  */
-
+//gcc --std=c99 -o out test_pq.c pq.c dynarray.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,6 +18,18 @@ int ascending_int_cmp(const void * a, const void * b) {
 
 
 int main(int argc, char** argv) {
+
+  // struct pq* p;
+  // p = pq_create();
+  // printf("%d\n",pq_isempty(p));
+  // pq_free(p);
+  // printf("%d\n",5/2);
+  
+
+
+
+
+
   struct pq* pq;
   int* first, * removed;
   int i, k, p;
@@ -31,9 +43,9 @@ int main(int argc, char** argv) {
   srand(0);
 
   /*
-   * Create priority queue and insert pointers to pseudo-random integer values
-   * into it with the same priority as the value.
-   */
+  //  * Create priority queue and insert pointers to pseudo-random integer values
+  //  * into it with the same priority as the value.
+  //  */
   pq = pq_create();
   printf("== Inserting some values into PQ\n");
   for (int i = 0; i < n; i++) {
@@ -88,6 +100,8 @@ int main(int argc, char** argv) {
    */
   memcpy(sorted + n, vals + n, m * sizeof(int));
   qsort(sorted + k, n - k + m, sizeof(int), ascending_int_cmp);
+
+
 
   printf("\n== Removing remaining from PQ: first / removed / priority (expected)\n");
   while (k < n + m && !pq_isempty(pq)) {
